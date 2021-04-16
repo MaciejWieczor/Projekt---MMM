@@ -1,0 +1,1 @@
+print("tu bedzie glowny modul programu")
