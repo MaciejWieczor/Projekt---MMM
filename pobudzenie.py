@@ -1,76 +1,104 @@
 import math
 
 class Pobudzenie:
-    def __init__(self, length, type, amplitude, width = 1, phase_shift = 0):
+    def __init__(self, length, type, amplitude, freq, step, phase_shift = 0):
         self.length = length
         self.type = type
         self.values = []
+        self.indexes = []
         self.amplitude = amplitude
-        self.width = width
+        self.freq = freq
+        self.step = step
         self.phase_shift = phase_shift
+        self.x = self.declare_index()
         self.y = self.create_list_value()
 
+    def declare_index(self):
+        if(self.type == "sine"):
+            for n in range(0, self.length):
+                self.indexes.append(n * 2 * math.pi * self.freq * self.step)
 
-    def phase(self):                                                #phase shift - dla ujemnych int w prawo, dla dodatnich w lewo
-        if(self.phase_shift < 0):                                   #jeśli self.phase_shift = 0, zwraca niezmienioną listę
-            for i in range(0, abs(self.phase_shift)):
-                self.values.insert(0, 0)
-                self.values.pop()
-        if(self.phase_shift > 0):
-            for i in range(0, self.phase_shift):
-                self.values.append(0)
-                self.values.pop(0)
-        return self.values
+        if(self.type == "triangle" or self.type == "square"):
+            for n in range(0, self.length):
+                self.indexes.append(n*self.step)
 
-    def create_list_value(self):                                    #tworzenie listy pobudzenia
-                                                                    #opcje : "square", "triangle", "sine"
-        if(self.type == "square"):
-            for i in range (0,self.width):
-                self.values.append(self.amplitude)
-            for i in range (self.width, self.length):
-                self.values.append(0)
+        return self.indexes
+
+    def create_list_value(self):
+        if(self.type == "sine"):
+            for n in range(0, self.length):
+                self.values.append(math.sin(self.indexes[n]))
 
         if(self.type == "triangle"):
-            self.values.append(0)
-            loop_num = int(self.length / self.width) + 1                        #określenie ile pół okresów ma się wykonać + 1 który zostanie na końcu poprawiony
-            for i in range (0, loop_num):
-                if(self.width % 2 == 0):
-                    half = int((self.width)/2)
-                else:
-                    half = int((self.width - 1)/2)
-                for i in range(1, half+1):
-                    self.values.append(self.amplitude * i / (half + 1))
-                self.values.append(self.amplitude)
-                for i in range(-half, 0):
-                    self.values.append(self.amplitude * (-i) / (half + 1))
-                self.values.append(0)                                           #zero na koniec każdego pół okresu
-            reszta = len(self.values) - self.length                             #dopełnienie ostatniego okresu
+            T = 1/self.freq
+            liczba_okresow = int(self.length * self.step / T) + 1
+            for i in range(0, liczba_okresow):
+                for n in range(0, int(T/4/self.step)):
+                    self.values.append(self.amplitude * self.indexes[n] * 4 / T)
+                for n in range(0, int(T/2/self.step)):
+                    self.values.append(self.amplitude + (-self.amplitude) * self.indexes[n] * 4 / T)
+                for n in range(0, int(T/4/self.step)):
+                    self.values.append(self.amplitude * self.indexes[n] * 4 / T - self.amplitude)
+            reszta = len(self.values) - self.length
             for i in range(0, reszta):
                 self.values.pop()
 
-        if(self.type == "sine"):                                                #większe width dla sinusoidy
-            for i in range(0, self.length):                                     #zwiększa jej rozdzielczość
-                self.values.append(self.amplitude*math.sin(i/self.width))
-            
+        if(self.type == "square"):
+            for i in range(0, int(1/self.freq/self.step)):
+                self.values.append(self.amplitude)
+            for i in range(int(1/self.freq/self.step), self.length):
+                self.values.append(0)
 
         self.values = self.phase()
         return self.values
 
+
+    def phase(self):                                                #phase shift - dla ujemnych int w prawo, dla dodatnich w lewo
+        actual_phase = int(self.phase_shift/self.step)
+        if(self.phase_shift < 0):                                   #jeśli self.phase_shift = 0, zwraca niezmienioną listę
+            for i in range(0, abs(actual_phase)):
+                self.values.insert(0, 0)
+                self.values.pop()
+        if(self.phase_shift > 0):
+            for i in range(0, abs(actual_phase)):
+                self.values.append(0)
+                self.values.pop(0)
+        return self.values
+
+
     def value_return(self):                                                     #hermetyzacja czy coś
         return self.y
+
+    def index_return(self):                                                     #hermetyzacja czy coś
+        return self.x
 
 
 
 import numpy as np
 import matplotlib.pyplot as plt
 
-range_var = 600                                                                 #potencjał na zrobienie jakiegoś
-width = 24                                                                      #systemu skalowania wykresu potem
-sygnal = Pobudzenie(range_var, "sine", 3, width)
-x = []
-for i in range(0, range_var):
-    x.append(i)
+range_var = 500                                                                 
+sygnal = Pobudzenie(range_var, "square", 5, 10, 0.001, -0.1)                    #opcje "square", "triangle", "sine"
+x = sygnal.index_return()
 y = sygnal.value_return()
 print(sygnal.value_return())
-plt.plot(x,y)
+fig = plt.figure()
+ax = fig.add_subplot(111)
+ax.plot(x,y)
+ax.set_xlabel('czas')
+ax.set_ylabel(f"{sygnal.type}(t)")
+ax.set_title('Pobudzenie')
+
+ax.text(0.95, 0.07, f'Frequency = {sygnal.freq}',
+        verticalalignment='bottom', horizontalalignment='right',
+        transform=ax.transAxes,
+        color='blue', fontsize=12)
+
+ax.text(0.95, 0.01, f'Step size = {sygnal.step}',
+        verticalalignment='bottom', horizontalalignment='right',
+        transform=ax.transAxes,
+        color='blue', fontsize=12)
+
 plt.show()
+
+#def __init__(self, length, type, amplitude, freq, step, phase_shift = 0):      #ściąga co gdzie wpisać w sygnal = Pobudzenie
