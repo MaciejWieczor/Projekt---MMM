@@ -64,8 +64,8 @@ class Pobudzenie:
 import numpy as np
 import matplotlib.pyplot as plt
 
-range_var = 600
-width = 24
+range_var = 600                                                                 #potencjał na zrobienie jakiegoś
+width = 24                                                                      #systemu skalowania wykresu potem
 sygnal = Pobudzenie(range_var, "sine", 3, width)
 x = []
 for i in range(0, range_var):
