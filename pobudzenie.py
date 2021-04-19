@@ -1,5 +1,7 @@
+import math
+
 class Pobudzenie:
-    def __init__(self, length, type, amplitude, width, phase_shift):
+    def __init__(self, length, type, amplitude, width = 1, phase_shift = 0):
         self.length = length
         self.type = type
         self.values = []
@@ -21,7 +23,7 @@ class Pobudzenie:
         return self.values
 
     def create_list_value(self):                                    #tworzenie listy pobudzenia
-                                                                    #opcje : "square", "triangle"
+                                                                    #opcje : "square", "triangle", "sine"
         if(self.type == "square"):
             for i in range (0,self.width):
                 self.values.append(self.amplitude)
@@ -46,6 +48,11 @@ class Pobudzenie:
             for i in range(0, reszta):
                 self.values.pop()
 
+        if(self.type == "sine"):                                                #większe width dla sinusoidy
+            for i in range(0, self.length):                                     #zwiększa jej rozdzielczość
+                self.values.append(self.amplitude*math.sin(i/self.width))
+            
+
         self.values = self.phase()
         return self.values
 
@@ -57,8 +64,9 @@ class Pobudzenie:
 import numpy as np
 import matplotlib.pyplot as plt
 
-range_var = 50
-sygnal = Pobudzenie(range_var, "triangle", 3, 15, -15)
+range_var = 600
+width = 24
+sygnal = Pobudzenie(range_var, "sine", 3, width)
 x = []
 for i in range(0, range_var):
     x.append(i)
