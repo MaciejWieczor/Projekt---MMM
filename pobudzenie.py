@@ -1,11 +1,24 @@
 class Pobudzenie:
-    def __init__(self, length, type, amplitude, width):
+    def __init__(self, length, type, amplitude, width, phase_shift):
         self.length = length
         self.type = type
         self.values = []
         self.amplitude = amplitude
         self.width = width
+        self.phase_shift = phase_shift
         self.y = self.create_list_value()
+
+
+    def phase(self):
+        if(self.phase_shift < 0):
+            for i in range(0, abs(self.phase_shift)):
+                self.values.insert(0, 0)
+                self.values.pop()
+        if(self.phase_shift > 0):
+            for i in range(0, self.phase_shift):
+                self.values.append(0)
+                self.values.pop(0)
+        return self.values
 
     def create_list_value(self):
 
@@ -33,7 +46,25 @@ class Pobudzenie:
             for i in range(0, reszta):
                 self.values.pop()
 
+        self.values = self.phase()
         return self.values
+
+
 
     def value_return(self):
         return self.y
+
+
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+range_var = 50
+sygnal = Pobudzenie(range_var, "triangle", 3, 15, -15)
+x = []
+for i in range(0, range_var):
+    x.append(i)
+y = sygnal.value_return()
+print(sygnal.value_return())
+plt.plot(x,y)
+plt.show()
