@@ -36,10 +36,10 @@ class Convolution:
 import numpy as np
 import matplotlib.pyplot as plt
 
-range_var = 8000
+range_var = 500
 step = 0.001
-sygnal1 = Pobudzenie(range_var, "sine", 1, 2, step, 0)
-sygnal2 = Pobudzenie(range_var, "sine", 1, 5, step, 0)
+sygnal1 = Pobudzenie(range_var, "square", 5, 10, step, -0.2)
+sygnal2 = Pobudzenie(range_var, "square", 5, 10, step, -0.05)
 splot = Convolution(sygnal1.value_return(), sygnal2.value_return())
 print(splot.value_return())
 fig, axs = plt.subplots(3)

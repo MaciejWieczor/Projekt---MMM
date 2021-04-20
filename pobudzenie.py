@@ -74,31 +74,31 @@ class Pobudzenie:
 
 
 
-#import numpy as np
-#import matplotlib.pyplot as plt
+import numpy as np
+import matplotlib.pyplot as plt
 
-#range_var = 500                                                                 
-#sygnal = Pobudzenie(range_var, "square", 5, 10, 0.001, -0.1)                    #opcje "square", "triangle", "sine"
-#x = sygnal.index_return()
-#y = sygnal.value_return()
-#print(sygnal.value_return())
-#fig = plt.figure()
-#ax = fig.add_subplot(111)
-#ax.plot(x,y)
-#ax.set_xlabel('czas')
-#ax.set_ylabel(f"{sygnal.type}(t)")
-#ax.set_title('Pobudzenie')
+range_var = 500                                                                 
+sygnal = Pobudzenie(range_var, "square", 5, 10, 0.001, -0.1)                    #opcje "square", "triangle", "sine"
+x = sygnal.index_return()
+y = sygnal.value_return()
+print(sygnal.value_return())
+fig = plt.figure()
+ax = fig.add_subplot(111)
+ax.plot(x,y)
+ax.set_xlabel('czas')
+ax.set_ylabel(f"{sygnal.type}(t)")
+ax.set_title('Pobudzenie')
 
-#ax.text(0.95, 0.07, f'Frequency = {sygnal.freq}',
-#        verticalalignment='bottom', horizontalalignment='right',
-#        transform=ax.transAxes,
-#        color='blue', fontsize=12)
+ax.text(0.95, 0.07, f'Frequency = {sygnal.freq}',
+        verticalalignment='bottom', horizontalalignment='right',
+        transform=ax.transAxes,
+        color='blue', fontsize=12)
 
-#ax.text(0.95, 0.01, f'Step size = {sygnal.step}',
-#        verticalalignment='bottom', horizontalalignment='right',
-#        transform=ax.transAxes,
-#        color='blue', fontsize=12)
+ax.text(0.95, 0.01, f'Step size = {sygnal.step}',
+        verticalalignment='bottom', horizontalalignment='right',
+        transform=ax.transAxes,
+        color='blue', fontsize=12)
 
-#plt.show()
+plt.show()
 
 #def __init__(self, length, type, amplitude, freq, step, phase_shift = 0):      #ściąga co gdzie wpisać w sygnal = Pobudzenie
