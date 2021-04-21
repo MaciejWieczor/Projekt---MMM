@@ -9,7 +9,7 @@ from matplotlib.backend_bases import key_press_handler
 from matplotlib.figure import Figure
 
 range_var = 500
-step = 0.01
+step = 0.1
 param = [1.6, -3, 0.4, 0.6, 1.4]    #a1, a0, b2, b1, b0
 amp = 5
 frequency = 10
@@ -37,5 +37,25 @@ def _quit():
 
 button = tkinter.Button(master=root.window, text="Quit", command=_quit)
 button.pack(side=tkinter.BOTTOM)
+
+#A1 = tkinter.Text(root.window, height = 1, width = 3)
+#A1.pack()
+
+def update():
+    range_var = int(name_var.get())
+    root.fig.clear()
+    root.rysowanie(range_var, step, param, amp, frequency, phase, type)
+    root.canvas_toolbar_init()
+    print(f"New range_var is {range_var}")
+
+
+name_var=tkinter.StringVar()
+passw_var=tkinter.StringVar()
+name_label = tkinter.Label(root.window , text = 'Username', font=('calibre',10, 'bold'))
+name_entry = tkinter.Entry(root.window ,textvariable = name_var, font=('calibre',10,'normal'))
+sub_btn=tkinter.Button(root.window ,text = 'Update', command = update)
+name_entry.pack()
+sub_btn.pack()
+
 tkinter.mainloop()
 
