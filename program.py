@@ -10,10 +10,14 @@ from matplotlib.figure import Figure
 
 range_var = 500
 step = 0.01
-param = [1.6, -3, 0.4, 0.6, 1.4]
+param = [1.6, -3, 0.4, 0.6, 1.4]    #a1, a0, b2, b1, b0
+amp = 5
+frequency = 10
+phase = -0.1
+type = "square"
 root = GUI()
 root.window.wm_title("Embedding in Tk")
-root.rysowanie(range_var, step, param)
+root.rysowanie(range_var, step, param, amp, frequency, phase, type)
 root.canvas_toolbar_init()
 
 

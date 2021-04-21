@@ -30,8 +30,8 @@ class GUI:
 
     #prawie jak static function ale potrzebuje obiektu Figure
     #rysuje trzy wykresy, pobudzenie, g(t) i splot dwóch poprzednich
-    def rysowanie(self, range_var, step, param):
-        sygnal1 = Pobudzenie(range_var, "square", 5, 10, step, -0.1) 
+    def rysowanie(self, range_var, step, param, amp, freq, phase, type):
+        sygnal1 = Pobudzenie(range_var, type, amp, freq, step, phase) 
         sygnal2 = Odpowiedz_impulsowa(range_var, step, param[0],param[1],param[2],param[3],param[4])
         splot = Convolution(sygnal1.value_return(), sygnal2.value_return())
 
