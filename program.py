@@ -1,20 +1,37 @@
 from pobudzenie import Pobudzenie
 import numpy as np
-import matplotlib.pyplot as plt
 from odpowiedz_impulsowa import Odpowiedz_impulsowa
 from splot import Convolution
+from gui import GUI
+import tkinter
+from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
+from matplotlib.backend_bases import key_press_handler
+from matplotlib.figure import Figure
 
-range_var = 3000
+range_var = 500
 step = 0.01
-sygnal1 = Pobudzenie(range_var, "square", 1, 2, step, 0)
-sygnal2 = Odpowiedz_impulsowa(range_var, step, 1.3, 6.33, 3.62, 0, 0.7)
-splot = Convolution(sygnal1.value_return(), sygnal2.value_return())
-print(splot.value_return())
-fig, axs = plt.subplots(3)
-axs[0].plot(sygnal1.index_return(), sygnal1.value_return())
-axs[1].plot(sygnal2.index_return(), sygnal2.value_return())
-x = []
-for i in range(0, len(splot.value_return())):
-    x.append(i*step)
-axs[2].plot(x,splot.value_return())
-plt.show()
+param = [1.6, -3, 0.4, 0.6, 1.4]
+root = GUI()
+root.window.wm_title("Embedding in Tk")
+root.rysowanie(range_var, step, param)
+root.canvas_toolbar_init()
+
+
+def on_key_press(event):
+    print("you pressed {}".format(event.key))
+    key_press_handler(event, root.canvas, root.toolbar)
+
+
+root.canvas.mpl_connect("key_press_event", on_key_press)
+
+
+def _quit():
+    root.window.quit()     # stops mainloop
+    root.window.destroy()  # this is necessary on Windows to prevent
+                    # Fatal Python Error: PyEval_RestoreThread: NULL tstate
+
+
+button = tkinter.Button(master=root.window, text="Quit", command=_quit)
+button.pack(side=tkinter.BOTTOM)
+tkinter.mainloop()
+

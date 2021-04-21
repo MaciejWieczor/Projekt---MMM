@@ -16,7 +16,7 @@ class Pobudzenie:
     def declare_index(self):
         if(self.type == "sine"):
             for n in range(0, self.length):
-                self.indexes.append(n * 2 * math.pi * self.freq * self.step)
+                self.indexes.append(n * self.step)
 
         if(self.type == "triangle" or self.type == "square"):
             for n in range(0, self.length):
@@ -27,7 +27,7 @@ class Pobudzenie:
     def create_list_value(self):
         if(self.type == "sine"):
             for n in range(0, self.length):
-                self.values.append(math.sin(self.indexes[n]))
+                self.values.append(math.sin(self.freq * self.indexes[n]))
 
         if(self.type == "triangle"):
             T = 1/self.freq
