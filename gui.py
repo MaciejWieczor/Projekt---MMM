@@ -35,8 +35,8 @@ class GUI:
         sygnal1 = Pobudzenie(range_var, type, amp, freq, step, phase) 
         sygnal2 = Odpowiedz_impulsowa(range_var, step, param[0],param[1],param[2],param[3],param[4], T)
         splot = Convolution(sygnal1.value_return(), sygnal2.value_return())
-        x_pob = sygnal1.index_return()[:int(2*range_var/freq)]
-        y_pob = sygnal1.value_return()[:int(2*range_var/freq)]
+        x_pob = sygnal1.index_return()[:int(2*range_var/freq)+int(abs(phase/step))]
+        y_pob = sygnal1.value_return()[:int(2*range_var/freq)+int(abs(phase/step))]
         fig = self.fig
         fig.add_subplot(221).plot(x_pob, y_pob)
         fig.add_subplot(222).plot(sygnal2.index_return(), sygnal2.value_return())

@@ -61,6 +61,16 @@ def update():
 def square():
     global type
     type = "square"
+    try:
+        frequency = int(freq_var.get())
+        range_var = int(range_varr.get())
+        amp = float(amp_var.get())
+        step = float(step_var.get())
+        param = [float(a1_var.get()), float(a0_var.get()), float(b2_var.get()), float(b1_var.get()), float(b0_var.get())]
+        phase = float(phase_var.get())
+        T = float(T_var.get())
+    except:
+        return None
     root.fig.clear()
     root.rysowanie(range_var, step, param, amp, frequency, phase, "square", T)
     root.canvas_toolbar_init()
@@ -68,6 +78,16 @@ def square():
 def triangle():
     global type 
     type = "triangle"
+    try:
+        frequency = int(freq_var.get())
+        range_var = int(range_varr.get())
+        amp = float(amp_var.get())
+        step = float(step_var.get())
+        param = [float(a1_var.get()), float(a0_var.get()), float(b2_var.get()), float(b1_var.get()), float(b0_var.get())]
+        phase = float(phase_var.get())
+        T = float(T_var.get())
+    except:
+        return None
     root.fig.clear()
     root.rysowanie(range_var, step, param, amp, frequency, phase, "triangle", T)
     root.canvas_toolbar_init()
@@ -75,6 +95,16 @@ def triangle():
 def sine():
     global type
     type = "sine"
+    try:
+        frequency = int(freq_var.get())
+        range_var = int(range_varr.get())
+        amp = float(amp_var.get())
+        step = float(step_var.get())
+        param = [float(a1_var.get()), float(a0_var.get()), float(b2_var.get()), float(b1_var.get()), float(b0_var.get())]
+        phase = float(phase_var.get())
+        T = float(T_var.get())
+    except:
+        return None
     root.fig.clear()
     root.rysowanie(range_var, step, param, amp, frequency, phase, "sine", T)
     root.canvas_toolbar_init()
@@ -82,6 +112,16 @@ def sine():
 def square_wave():
     global type
     type = "square_wave"
+    try:
+        frequency = int(freq_var.get())
+        range_var = int(range_varr.get())
+        amp = float(amp_var.get())
+        step = float(step_var.get())
+        param = [float(a1_var.get()), float(a0_var.get()), float(b2_var.get()), float(b1_var.get()), float(b0_var.get())]
+        phase = float(phase_var.get())
+        T = float(T_var.get())
+    except:
+        return None
     root.fig.clear()
     root.rysowanie(range_var, step, param, amp, frequency, phase, "square_wave", T)
     root.canvas_toolbar_init()
