@@ -18,7 +18,7 @@ class Pobudzenie:
             for n in range(0, self.length):
                 self.indexes.append(n * self.step)
 
-        if(self.type == "triangle" or self.type == "square"):
+        if(self.type == "triangle" or self.type == "square" or self.type == "square_wave"):
             for n in range(0, self.length):
                 self.indexes.append(n*self.step)
 
@@ -27,21 +27,22 @@ class Pobudzenie:
     def create_list_value(self):
         if(self.type == "sine"):
             for n in range(0, self.length):
-                self.values.append(math.sin(self.freq * self.indexes[n]))
+                self.values.append(self.amplitude * math.sin(self.freq * self.indexes[n]))
+
+        if(self.type == "square_wave"):
+            self.values.append(0)
+            for n in range(1, self.length):
+                war = math.sin(self.freq * self.indexes[n])
+                if(war > 0):
+                    self.values.append(int(self.amplitude  ))
+                else:
+                    self.values.append(int(-self.amplitude ))
 
         if(self.type == "triangle"):
-            T = 1/self.freq
-            liczba_okresow = int(self.length * self.step / T) + 1
-            for i in range(0, liczba_okresow):
-                for n in range(0, int(T/4/self.step)):
-                    self.values.append(self.amplitude * self.indexes[n] * 4 / T)
-                for n in range(0, int(T/2/self.step)):
-                    self.values.append(self.amplitude + (-self.amplitude) * self.indexes[n] * 4 / T)
-                for n in range(0, int(T/4/self.step)):
-                    self.values.append(self.amplitude * self.indexes[n] * 4 / T - self.amplitude)
-            reszta = len(self.values) - self.length
-            for i in range(0, reszta):
-                self.values.pop()
+            for n in range(0, self.length):
+                funkcja = (2*self.amplitude/math.pi)*math.asin(math.sin(self.indexes[n]*2*math.pi*self.freq))
+                self.values.append(funkcja)
+            
 
         if(self.type == "square"):
             for i in range(0, int(1/self.freq/self.step)):
