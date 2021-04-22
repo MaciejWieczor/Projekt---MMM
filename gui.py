@@ -8,6 +8,7 @@ from splot import Convolution
 import numpy as np
 import math
 
+
 class GUI:
     def __init__(self):
         self.window = self.window_init()
@@ -19,7 +20,7 @@ class GUI:
         return tkinter.Tk()
 
     def fig_ini(self):
-        fig = Figure(figsize=(5, 4), dpi=100)
+        fig = Figure(figsize=(11, 6), dpi=100)
         return fig
 
     def canvas_toolbar_init(self):
@@ -38,9 +39,23 @@ class GUI:
         x_pob = sygnal1.index_return()[:int(2*range_var/freq)+int(abs(phase/step))]
         y_pob = sygnal1.value_return()[:int(2*range_var/freq)+int(abs(phase/step))]
         fig = self.fig
-        fig.add_subplot(221).plot(x_pob, y_pob)
-        fig.add_subplot(222).plot(sygnal2.index_return(), sygnal2.value_return())
+        gs = fig.add_gridspec(2,2, hspace=0.5, wspace=0.3)
+        
+        ax1 = fig.add_subplot(gs[0, 0])
+        ax1.plot(x_pob, y_pob)
+        ax1.title.set_text(f"Pobudzenie typu {type}")
+        ax1.set_xlabel("czas (t = n * krok)")
+        ax1.set_ylabel("x[t]")
+        ax2 = fig.add_subplot(gs[0, 1])
+        ax2.plot(sygnal2.index_return(), sygnal2.value_return())
+        ax2.title.set_text("Transmitancja g(t)")
+        ax2.set_xlabel("czas (t = n * krok)")
+        ax2.set_ylabel("g[t]")
+        ax3 = fig.add_subplot(gs[1, :])
         x = []
         for i in range(0, int(len(splot.value_return())/2)):
             x.append(i*step)
-        fig.add_subplot(313).plot(x, splot.value_return()[:int(len(splot.value_return())/2)])
+        ax3.plot(x, splot.value_return()[:int(len(splot.value_return())/2)])
+        ax3.title.set_text(f"Odpowiedź układu czyli splot transmitancji g(t) i pobudzenia typu {type}")
+        ax3.set_xlabel("czas (t = n * krok)")
+        ax3.set_ylabel("x[t] ⁕ g[t]")
