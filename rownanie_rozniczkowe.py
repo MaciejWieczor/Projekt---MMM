@@ -13,12 +13,13 @@ class Rownanie_rozniczkowe:
             self.w0 = w0
             self.w1 = w1
             self.krok = krok
-            self.T = T
             self.wejscie = pobudzenie
-            self.lista_krokow = []
             self.ilosc_krokow = ilosc_krokow
             self.symulacja()
-
+            self.T = T
+            if(self.T < 0):
+                self.T = 0
+            self.przesuniecie()
 
     class  Integrator:
 
@@ -44,12 +45,20 @@ class Rownanie_rozniczkowe:
         S1 = self.Integrator(self.w1, self.krok)
 
         ##symulacja
-        for t in range(0, self.ilosc_krokow):
-            x0prim = self.alfa * self.wejscie[t] - self.gamma * S1.zwroc_wartosc()
-            x1prim = self.beta * self.wejscie[t] - self.delta * S1.zwroc_wartosc() + S0.zwroc_wartosc()
+        for t in range(1, self.ilosc_krokow):
+
             S0.calkowanie(x0prim)
             S1.calkowanie(x1prim)
+            x0prim = self.alfa * self.wejscie[t] - self.gamma * S1.zwroc_wartosc()
+            x1prim = self.beta * self.wejscie[t] - self.delta * S1.zwroc_wartosc() + S0.zwroc_wartosc()
             self.wynik.append(S1.zwroc_wartosc())
+
+    def przesuniecie(self):
+        n = 0
+        while(self.T > n*self.krok):
+            self.wynik.insert(0,0)
+            self.wynik.pop()
+            n += 1
 
     def value_return(self):
         return self.wynik
@@ -63,6 +72,6 @@ sygnal = []
 for i in range(0,1000):
     sygnal.append(1)
 
-wynik = Rownanie_rozniczkowe(sygnal, 1000, 0.01, 1, 1, 1, 1, 10, 0, 0)
+wynik = Rownanie_rozniczkowe(sygnal, 1000, 0.01, 1, 1, 1, 1, 10, 0, 0, 1)
 
 print(wynik.value_return())
