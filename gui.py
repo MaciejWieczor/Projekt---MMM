@@ -5,6 +5,7 @@ from matplotlib.figure import Figure
 from pobudzenie import Pobudzenie
 from odpowiedz_impulsowa import Odpowiedz_impulsowa
 from splot import Convolution
+from rownanie_rozniczkowe import Rownanie_rozniczkowe
 import numpy as np
 import math
 
@@ -33,29 +34,35 @@ class GUI:
     #prawie jak static function ale potrzebuje obiektu Figure
     #rysuje trzy wykresy, pobudzenie, g(t) i splot dwóch poprzednich
     def rysowanie(self, range_var, step, param, amp, freq, phase, type, T):
+        y = [0,1]
+        for i in range(0, range_var-2):
+            y.append(0)
         sygnal1 = Pobudzenie(range_var, type, amp, freq, step, phase) 
-        sygnal2 = Odpowiedz_impulsowa(range_var, step, param[0],param[1],param[2],param[3],param[4], T)
-        splot = Convolution(sygnal1.value_return(), sygnal2.value_return())
+        sygnal2 = Rownanie_rozniczkowe(y, range_var, step, param[0], param[1], param[2], param[3], param[4], 0, 0, T)
+        #sygnal2 = Odpowiedz_impulsowa(range_var, step, param[0],param[1],param[2],param[3],param[4], T)
+        splot = Rownanie_rozniczkowe(sygnal1.value_return(), range_var, step, param[0], param[1], param[2], param[3], param[4], 0, 0, T)
         x_pob = sygnal1.index_return()[:int(2*range_var/freq)+int(abs(phase/step))]
         y_pob = sygnal1.value_return()[:int(2*range_var/freq)+int(abs(phase/step))]
         fig = self.fig
         gs = fig.add_gridspec(2,2, hspace=0.5, wspace=0.3)
-        
+        z = []
+        for i in range(0, range_var-1):
+            z.append(i*step)
         ax1 = fig.add_subplot(gs[0, 0])
         ax1.plot(x_pob, y_pob)
         ax1.title.set_text(f"Pobudzenie typu {type}")
         ax1.set_xlabel("czas (t = n * krok)")
         ax1.set_ylabel("x[t]")
         ax2 = fig.add_subplot(gs[0, 1])
-        ax2.plot(sygnal2.index_return(), sygnal2.value_return())
+        ax2.plot(z, sygnal2.value_return())
         ax2.title.set_text("Transmitancja g(t)")
         ax2.set_xlabel("czas (t = n * krok)")
         ax2.set_ylabel("g[t]")
         ax3 = fig.add_subplot(gs[1, :])
         x = []
-        for i in range(0, int(len(splot.value_return())/2)):
+        for i in range(0, len(splot.value_return())):
             x.append(i*step)
-        ax3.plot(x, splot.value_return()[:int(len(splot.value_return())/2)])
+        ax3.plot(x, splot.value_return())
         ax3.title.set_text(f"Odpowiedź układu czyli splot transmitancji g(t) i pobudzenia typu {type}")
         ax3.set_xlabel("czas (t = n * krok)")
         ax3.set_ylabel("x[t] ⁕ g[t]")
