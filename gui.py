@@ -55,14 +55,14 @@ class GUI:
         ax1.set_ylabel("x[t]")
         ax2 = fig.add_subplot(gs[0, 1])
         ax2.plot(z, sygnal2.value_return())
-        ax2.title.set_text("Transmitancja g(t)")
+        ax2.title.set_text("Odpowiedź impulsowa układu")
         ax2.set_xlabel("czas (t = n * krok)")
-        ax2.set_ylabel("g[t]")
+        ax2.set_ylabel("h[t]")
         ax3 = fig.add_subplot(gs[1, :])
         x = []
         for i in range(0, len(splot.value_return())):
             x.append(i*step)
         ax3.plot(x, splot.value_return())
-        ax3.title.set_text(f"Odpowiedź układu czyli splot transmitancji g(t) i pobudzenia typu {type}")
+        ax3.title.set_text(f"Odpowiedź układu czyli równanie różniczkowe z pobudzeniem typu {type}")
         ax3.set_xlabel("czas (t = n * krok)")
-        ax3.set_ylabel("x[t] ⁕ g[t]")
+        ax3.set_ylabel("y[t]")
