@@ -34,5 +34,3 @@ class Convolution:
         return self.y
 
 
-
-

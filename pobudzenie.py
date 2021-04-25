@@ -45,9 +45,9 @@ class Pobudzenie:
             
 
         if(self.type == "square"):
-            for i in range(0, int(1/self.freq/self.step)):
+            for i in range(0, int(self.freq/self.step)):
                 self.values.append(self.amplitude)
-            for i in range(int(1/self.freq/self.step), self.length):
+            while(len(self.values) < self.length):
                 self.values.append(0)
 
         self.values = self.phase()

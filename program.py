@@ -9,10 +9,10 @@ from matplotlib.backend_bases import key_press_handler
 from matplotlib.figure import Figure
 
 range_var = 1000
-step = 0.005
+step = 0.01
 param = [1.6, -3, 0.4, 0.6, 1.4]    #a1, a0, b2, b1, b0
-amp = 10
-frequency = 10
+amp = 1
+frequency = 1
 phase = 0
 T = 0
 type = "square"
@@ -45,7 +45,7 @@ def _quit():
 
 def update():
     try:
-        frequency = int(freq_var.get())
+        frequency = float(freq_var.get())
         range_var = int(range_varr.get())
         amp = float(amp_var.get())
         step = float(step_var.get())
@@ -62,7 +62,7 @@ def square():
     global type
     type = "square"
     try:
-        frequency = int(freq_var.get())
+        frequency = float(freq_var.get())
         range_var = int(range_varr.get())
         amp = float(amp_var.get())
         step = float(step_var.get())
@@ -79,7 +79,7 @@ def triangle():
     global type 
     type = "triangle"
     try:
-        frequency = int(freq_var.get())
+        frequency = float(freq_var.get())
         range_var = int(range_varr.get())
         amp = float(amp_var.get())
         step = float(step_var.get())
@@ -96,7 +96,7 @@ def sine():
     global type
     type = "sine"
     try:
-        frequency = int(freq_var.get())
+        frequency = float(freq_var.get())
         range_var = int(range_varr.get())
         amp = float(amp_var.get())
         step = float(step_var.get())
@@ -113,7 +113,7 @@ def square_wave():
     global type
     type = "square_wave"
     try:
-        frequency = int(freq_var.get())
+        frequency = float(freq_var.get())
         range_var = int(range_varr.get())
         amp = float(amp_var.get())
         step = float(step_var.get())
