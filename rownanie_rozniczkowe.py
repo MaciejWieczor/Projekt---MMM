@@ -1,4 +1,3 @@
-
 class Rownanie_rozniczkowe:
 
     def __init__(self, pobudzenie, ilosc_krokow, krok, a1, a0, b2, b1 , b0, w0, w1, T): ## w0 i w1 to warunki poczatkowe
@@ -45,7 +44,7 @@ class Rownanie_rozniczkowe:
         S1 = self.Integrator(self.w1, self.krok)
 
         ##symulacja
-        for t in range(1, self.ilosc_krokow):
+        for t in range(0, self.ilosc_krokow):
 
             S0.calkowanie(x0prim)
             S1.calkowanie(x1prim)

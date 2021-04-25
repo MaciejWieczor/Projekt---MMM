@@ -34,8 +34,8 @@ class GUI:
     #prawie jak static function ale potrzebuje obiektu Figure
     #rysuje trzy wykresy, pobudzenie, g(t) i splot dwóch poprzednich
     def rysowanie(self, range_var, step, param, amp, freq, phase, type, T):
-        y = [0,1]
-        for i in range(0, range_var-2):
+        y = [1]
+        for i in range(0, range_var-1):
             y.append(0)
         sygnal1 = Pobudzenie(range_var, type, amp, freq, step, phase) 
         sygnal2 = Rownanie_rozniczkowe(y, range_var, step, param[0], param[1], param[2], param[3], param[4], 0, 0, T)
@@ -46,7 +46,7 @@ class GUI:
         fig = self.fig
         gs = fig.add_gridspec(2,2, hspace=0.5, wspace=0.3)
         z = []
-        for i in range(0, range_var-1):
+        for i in range(0, range_var):
             z.append(i*step)
         ax1 = fig.add_subplot(gs[0, 0])
         ax1.plot(x_pob, y_pob)
