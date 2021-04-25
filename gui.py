@@ -34,7 +34,8 @@ class GUI:
     #prawie jak static function ale potrzebuje obiektu Figure
     #rysuje trzy wykresy, pobudzenie, g(t) i splot dwóch poprzednich
     def rysowanie(self, range_var, step, param, amp, freq, phase, type, T):
-        y = [1]
+        y = []
+        y.append(1/step)
         for i in range(0, range_var-1):
             y.append(0)
         sygnal1 = Pobudzenie(range_var, type, amp, freq, step, phase) 
