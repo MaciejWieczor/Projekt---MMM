@@ -51,22 +51,30 @@ class GUI:
         z = []
         for i in range(0, range_var):
             z.append(i*step)
-        ax1 = fig.add_subplot(gs[0, 0])
         ax4 = fig.add_subplot(gs[0, 2])
         ax4.title.set_text("Charakterystyka amplitudowa odpowiedzi")
+        ax4.set_xlabel("rad/s")
+        ax4.set_ylabel("Amplituda (liniowa)")
         ax4.plot(charakterystyki.return_indexes_amplitude(), charakterystyki.return_values_amplitude())
+
         ax5 = fig.add_subplot(gs[1, 2])
         ax5.title.set_text("Charakterystyka częstotliwościowa odpowiedzi")
+        ax5.set_xlabel("rad/s")
+        ax5.set_ylabel("stopnie")
         ax5.plot(charakterystyki.return_indexes_phase(), charakterystyki.return_values_phase())
+
+        ax1 = fig.add_subplot(gs[0, 0])
         ax1.plot(x_pob, y_pob)
         ax1.title.set_text(f"Pobudzenie typu {type}")
         ax1.set_xlabel("czas (t = n * krok)")
         ax1.set_ylabel("x[t]")
+
         ax2 = fig.add_subplot(gs[0, 1])
         ax2.plot(z, sygnal2.value_return())
         ax2.title.set_text("Odpowiedź impulsowa układu")
         ax2.set_xlabel("czas (t = n * krok)")
         ax2.set_ylabel("h[t]")
+
         ax3 = fig.add_subplot(gs[1, :2])
         x = []
         for i in range(0, len(splot.value_return())):
